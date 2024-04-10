@@ -22,16 +22,18 @@ class StatScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            SizedBox(
+            Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.width,
-              // color: Colors.red,
-              child: const MyChart()
-              //   BarChart(
-              //   BarChartData(
-
-              //   )
-              // ),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(12), // adjusts the roundness of the chart
+              ),
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(12, 20, 12, 12), // padding for chart, LTRB (left, top, right, bottom) numbers adjust size
+                child: const MyChart(),
+              )
+              
             )
           ],
         ),
