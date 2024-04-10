@@ -1,16 +1,36 @@
-# budget_buddy
+# Budget Buddy
 
-A new Flutter project.
+Budget Buddy is a Flutter-based expense management application designed to help users track their expenses, manage their budget, and maintain financial stability. The app offers the following features:
 
-## Getting Started
+## 1. Authentication:
+   - Users can sign in or sign up using their email and password.
+   - Firebase Authentication is used for user authentication.
 
-This project is a starting point for a Flutter application.
+## 2. Dashboard:
+   - Upon logging in, users are greeted with a personalized dashboard.
+   - The dashboard displays the user's profile information, including their name and available balance.
+   - Users can view their most recent income and expenses.
 
-A few resources to get you started if this is your first Flutter project:
+## 3. Expense Tracking:
+   - Users can add new transactions to track their expenses.
+   - Each transaction can be categorized, and users can choose from predefined categories or create custom ones.
+   - Transaction details include category, amount, date, and optional notes.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 4. User Interface:
+   - The app's user interface is designed for simplicity and ease of use.
+   - It utilizes Flutter widgets such as Columns, Rows, Containers, Icons, Text fields, and Buttons for organizing and displaying information.
+   - Visual elements are customizable, including colors, icons, and layouts.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 5. Integration of Assets:
+   - The app supports the integration of custom images for icons and category representations.
+   - Users can choose from a variety of icons and colors when creating custom categories for transactions.
+
+## 6. Data Storage:
+   - Transaction data is stored locally or remotely, depending on the chosen implementation (SQLite, SharedPreferences, or Firebase Firestore).
+
+## 7. Testing:
+   - Thorough testing ensures the app functions correctly on various devices and scenarios.
+   - Testing covers user interactions, data input validation, navigation, and overall app stability.
+
+Budget Buddy aims to provide users with a comprehensive tool for managing their finances efficiently, empowering them to make informed decisions and achieve their financial goals.
+
