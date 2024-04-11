@@ -1,9 +1,47 @@
+import 'dart:ui';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:intl/intl.dart';
 
-class AddExpense extends StatelessWidget {
+class AddExpense extends StatefulWidget {
   const AddExpense({super.key});
+
+  @override
+  State<AddExpense> createState() => _AddExpenseState();
+}
+
+class _AddExpenseState extends State<AddExpense> {
+TextEditingController expenseController = TextEditingController();
+TextEditingController categoryController = TextEditingController();
+TextEditingController dateController = TextEditingController();
+DateTime selectedDate = DateTime.now();
+
+List<String> myCategoriesIcons = [
+'Food & Dining',
+'Transportation',
+'Housing',
+'Utilities',
+'Entertainment',
+'Health & Fitness',
+'Medical Care',
+'Travel',
+'Shopping',
+'Education',
+'Personal Care',
+'Investments',
+'Miscellaneous',
+];
+
+
+@override
+  void initState() {
+    dateController.text = DateFormat('MM/dd/yyyy').format(DateTime.now()); // this line of code sets the date to the current date with a format i installed in the pubspec.yaml file
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,25 +69,212 @@ class AddExpense extends StatelessWidget {
               SizedBox(
                 width: MediaQuery.of(context).size.width * 0.7, // makes the top $ circle smaller adjust by make 0.7 larger or smaller
                 child: TextFormField(
-                
+                controller: expenseController,
                   decoration: InputDecoration(
-                    prefixIcon: Icon(FontAwesomeIcons.dollarSign, size: 16),
+                    filled: true,
+                    fillColor: Colors.white,
+                    prefixIcon: const Icon(
+                      FontAwesomeIcons.dollarSign,
+                      size: 16, 
+                      color: Colors.black, // change color of dollar sign on the add expense page
+                      ),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30)
+                      borderRadius: BorderRadius.circular(32),
+                      borderSide: BorderSide.none // removes the border from the text field under the Add Expense, remove this line to have a border.
                     ),
                   ),
                 ),
-              ),
+              ),// below starts the modifications for the 2nd box i created for the add expense page
+              const SizedBox(height: 32),
+              TextFormField(
+                controller: categoryController,
+                readOnly: true,// this line of code makes the text field read only where the user cant type, remove if want to type in the text field
+                onTap:() {
+                  
+                },
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    prefixIcon: const Icon(
+                      FontAwesomeIcons.list, // creates a list icon on the add expense page
+                      size: 16, 
+                      color: Colors.black, // change color of dollar sign on the add expense page
+                      ),
+                      suffixIcon:  IconButton(
+                        onPressed: () {
+                        showDialog(
+                          context: context, 
+                          builder: (ctx){
+                            bool isExpanded = false;
+
+                            return StatefulBuilder(
+                              builder: (context, setState) {
+                              return AlertDialog(
+                                title: const Text(
+                                      'Create a Category' // add style format later through here
+                                    ),
+                                content: Column(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                  TextFormField(
+                                            // controller: dateController,
+                                            textAlignVertical: TextAlignVertical.center, 
+                                            decoration: InputDecoration(
+                                                isDense: true,
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                                hintText: 'Name', 
+                                                border: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(10), 
+                                                  borderSide: BorderSide.none 
+                                                ),
+                                              ),
+                                            ),
+                                            const SizedBox(height: 16,),
+                                            TextFormField(
+                                            // controller: dateController,
+                                            onTap:() {
+                                              setState(() {
+                                                isExpanded = !isExpanded;
+                                              });
+                                            },
+                                            textAlignVertical: TextAlignVertical.center, 
+                                            readOnly: true, 
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                                filled: true,
+                                                suffixIcon: Icon(CupertinoIcons.chevron_down, size: 12,),
+                                                fillColor: Colors.white,
+                                                hintText: 'Icon', 
+                                                border: OutlineInputBorder(
+                                                  borderRadius: isExpanded
+                                                  ? const BorderRadius.vertical(
+                                                  top: Radius.circular(12)
+                                              )
+                                              : BorderRadius.circular(12),
+                                                  borderSide: BorderSide.none 
+                                                ),
+                                              ),
+                                            ),
+                                            isExpanded 
+                                            ? Container(
+                                              width:MediaQuery.of(context).size.width,
+                                              height: 200,
+                                              decoration: const BoxDecoration(
+                                              color:Colors.white,
+                                              borderRadius: BorderRadius.vertical(
+                                                bottom: Radius.circular(12)
+                                              )
+                                              ),
+                                              child: ListView.builder(
+                                                itemCount: myCategoriesIcons.length,
+                                                itemBuilder: (context, int i) {
+                                                  return Container(
+                                                    width: 50,
+                                                    height: 50,
+                                                    decoration: BoxDecoration(
+                                                      image: DecorationImage(
+                                                        image: AssetImage(
+                                                          'assets/${myCategoriesIcons[i]}.png' // now if they werent png you would have to input different code
+                                                        )
+                                                      )
+                                                    ),
+                                                  );
+                                                }
+                                              ),
+                                            )
+                                            : Container(),
+                                            const SizedBox(height: 16,),
+                                            TextFormField(
+                                            // controller: dateController,
+                                            textAlignVertical: TextAlignVertical.center, 
+                                            // readOnly: true, 
+                                            decoration: InputDecoration(
+                                              isDense: true,
+                                                filled: true,
+                                                fillColor: Colors.white,
+                                                hintText: 'Color', 
+                                                border: OutlineInputBorder(
+                                                  borderRadius: BorderRadius.circular(10), 
+                                                  borderSide: BorderSide.none 
+                                                ),
+                                              ),
+                                            ),
+                                  ],
+                                )
+                              );
+                              }
+                            );
+                          }
+                          );
+                        },
+                      icon:  const Icon(FontAwesomeIcons.plus, 
+                      size: 16, 
+                      color: Colors.black, 
+                      )
+                      ),
+                      hintText: 'Category', // this feature hintText allows the word "Category" to be displayed in the text field before the user types anything and disappears when the user starts typing
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10), // changes the roundness of the text field for this widget
+                      borderSide: BorderSide.none // removes the border from the text field under the Add Expense, remove this line to have a border.
+                    ),
+                  ),
+                ), // below starts the modifications for the 3rd box i created for the add expense page
               const SizedBox(height: 16),
-              TextFormField(),
-              const SizedBox(height: 16),
-              TextFormField(),
-              const SizedBox(height: 16),
-              TextButton(
-                onPressed: () {},
-                child: const Text(
-                  'Save'
-                )
+              TextFormField(
+                controller: dateController,
+                textAlignVertical: TextAlignVertical.center, // this line of code centers the text in the text field
+                readOnly: true, // this line of code makes the text field read only where the user cant type
+                onTap:() async { 
+                  DateTime? newDate = await showDatePicker(
+                  context: context,
+                  initialDate: selectedDate,
+                  firstDate: DateTime.now(), 
+                  lastDate: DateTime.now().add(const Duration(days:365))  // this line of code allows the user to select a date from the calendar
+                );
+
+                if(newDate != null) {
+                  setState(() {
+                    dateController.text = DateFormat('MM/dd/yyyy').format(newDate); 
+                    selectedDate = newDate;
+                  });
+                }
+                },
+                decoration: InputDecoration(
+                    filled: true,
+                    fillColor: Colors.white,
+                    prefixIcon: const Icon(
+                      FontAwesomeIcons.clock, // creates a list icon on the add expense page
+                      size: 16, 
+                      color: Colors.black, // change color of dollar sign on the add expense page
+                      ),
+                      hintText: 'Date', // this feature hintText allows the word "Category" to be displayed in the text field before the user types anything and disappears when the user starts typing
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10), // changes the roundness of the text field for this widget
+                      borderSide: BorderSide.none // removes the border from the text field under the Add Expense, remove this line to have a border.
+                    ),
+                  ),
+                ),
+              const SizedBox(height: 32), // adjust the space between the text fields and the save button on the add expense page
+              SizedBox(
+                width: double.infinity,
+                height:kToolbarHeight,
+                child: TextButton(
+                  onPressed: () {},
+                  style: TextButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10) // changes the roundness of the save button on the add expense page
+                    )
+                  ),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20 // changes the size of the text on the save button on the add expense page
+                    ),
+                  )
+                ),
               )
             ],
           ),

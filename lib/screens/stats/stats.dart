@@ -29,9 +29,9 @@ class StatScreen extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(12), // adjusts the roundness of the chart
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(12, 20, 12, 12), // padding for chart, LTRB (left, top, right, bottom) numbers adjust size
-                child: const MyChart(),
+              child: const Padding(
+                padding: EdgeInsets.fromLTRB(12, 20, 12, 12), // padding for chart, LTRB (left, top, right, bottom) numbers adjust size
+                child: MyChart(),
               )
               
             )
