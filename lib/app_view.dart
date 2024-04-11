@@ -11,7 +11,7 @@ class MyAppView extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: "Budget Buddy",
       theme: ThemeData(
-        colorScheme: ColorScheme.light(
+        colorScheme: const ColorScheme.light(
           background: Colors.white70,
           onBackground: Colors.black,
           primary: Color.fromARGB(255, 0, 83, 226),
@@ -22,7 +22,7 @@ class MyAppView extends StatelessWidget {
 
         )
       ),
-    home: HomeScreen(),
+    home: const HomeScreen(),
     );
   }
 }

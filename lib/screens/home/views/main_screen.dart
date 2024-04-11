@@ -14,7 +14,7 @@ class MainScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal:20.0, vertical: 5),
+        padding: const EdgeInsets.symmetric(horizontal:20.0, vertical: 5),// this changes the padding of the screen, higher in value will lower the text
         child: Column(
           children: [
             Row(
@@ -99,7 +99,7 @@ class MainScreen extends StatelessWidget {
                       fontWeight: FontWeight.bold
                     ),
                   ),
-                  const SizedBox(height: 12), // you can change the height of the text (Total Balance) from the top of the screen by changing the value of the height (10
+                  const SizedBox(height: 9), // you can change the height of the text (Total Balance) from the top of the screen by changing the value of the height (10
                   const Text(
                     '\$25,000', // you can change the amount of money you want to appear on the screen
                     style: TextStyle(
@@ -109,7 +109,7 @@ class MainScreen extends StatelessWidget {
                     ),
                   ), 
                   Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
+                    padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 13), // vertical changes the height of the "Total Balance", horizontal changes the width of "Expense and Income" from L to R
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -130,7 +130,7 @@ class MainScreen extends StatelessWidget {
                                 )
                               ),
                             ),
-                            const SizedBox(width: 7),
+                            const SizedBox(width: 5),
                             const Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -138,7 +138,7 @@ class MainScreen extends StatelessWidget {
                               'Income ',
                               style:TextStyle(
                         fontSize:13,
-                        color: Colors.white,
+                        color: Colors.white, // updates the color of the text on the top left (income)
                         fontWeight: FontWeight.w400
                       ),
                         ),
@@ -161,12 +161,12 @@ class MainScreen extends StatelessWidget {
                               height: 25,
                               decoration: const BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: Colors.white
+                                color: Colors.white // updates the color of the circle on the top right (expenses
                               ),
                               child : const Center(
                                 child: Icon(
                                   CupertinoIcons.arrow_down,
-                                  color: Color.fromARGB(255, 242, 1, 1),
+                                  color: Color.fromARGB(255, 242, 1, 1), // updates the color of the arrow icon on the top right (expenses)
                                   size: 12,
                                 )
                               ),
@@ -179,7 +179,7 @@ class MainScreen extends StatelessWidget {
                               'Expenses ',
                               style:TextStyle(
                         fontSize:13,
-                        color: Colors.white,
+                        color: Colors.white, // updates the color of the text on the top right (expenses)
                         fontWeight: FontWeight.w400
                       ),
                         ),
