@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 
@@ -35,9 +36,6 @@ List<String> myCategoriesIcons = [ //if i choose to change the icons, below must
 'travel',
 'utilities'
 ];
-
-String iconSelected = '';
-
 
 @override
   void initState() {
@@ -108,7 +106,9 @@ String iconSelected = '';
                           context: context, 
                           builder: (ctx){
                             bool isExpanded = false;
-
+                            String iconSelected = '';
+                            Color categoryColor = Colors.white;                            
+                            
                             return StatefulBuilder(
                               builder: (context, setState) {
                               return AlertDialog(
@@ -213,12 +213,61 @@ String iconSelected = '';
                                               const SizedBox(height: 16,),
                                               TextFormField(
                                               // controller: dateController,
+                                              onTap:() {
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (ctx2){
+                                                  //   setState(() {
+                                                  //   categoryColor = Colors.blue;
+                                                  // });
+                                                  return AlertDialog(
+                                                    content: Column(
+                                                      mainAxisSize: MainAxisSize.min,
+                                                      children: [
+                                                        ColorPicker(
+                                                        pickerColor: categoryColor,
+                                                        onColorChanged: (value) {
+                                                          setState(() {
+                                                            categoryColor = value;
+                                                          });
+                                                        },
+                                                        ),
+                                                        SizedBox(
+                                                          width: double.infinity,
+                                                          height: 50,
+                                                          child: TextButton(
+                                                          onPressed: () {
+                                                            Navigator.pop(ctx2);
+                                                          },
+                                          style: TextButton.styleFrom(
+                                        backgroundColor: Colors.black,
+                                          shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.circular(10) 
+                    )
+                  ),
+                              child: const Text(
+                          'Save',
+                          style: TextStyle(
+                            color: Colors.white,
+                              fontSize: 20 
+                    ),
+                  )
+                ),
+                                                          
+                                                        )
+                                                      ],
+                                                    ),
+                                                  );
+                                                  }
+                                                );
+                                              
+                                              },
                                               textAlignVertical: TextAlignVertical.center, 
-                                              // readOnly: true, 
+                                              readOnly: true, 
                                               decoration: InputDecoration(
                                                 isDense: true,
                                                   filled: true,
-                                                  fillColor: Colors.white,
+                                                  fillColor: categoryColor,
                                                   hintText: 'Color', 
                                                   border: OutlineInputBorder(
                                                     borderRadius: BorderRadius.circular(10), 
@@ -226,6 +275,30 @@ String iconSelected = '';
                                                   ),
                                                 ),
                                               ),
+                                              const SizedBox(height: 16,),
+                                              SizedBox(
+                            width: double.infinity,
+                          height:kToolbarHeight,
+                        child: TextButton(
+                          onPressed: () {
+                            // Create category object and POP
+                            Navigator.pop(context);
+                          },
+                          style: TextButton.styleFrom(
+                    backgroundColor: Colors.black,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10) 
+                    )
+                  ),
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20 // changes the size of the text on the save button on the add expense page
+                    ),
+                  )
+                ),
+              )
                                     ],
                                   ),
                                 )
