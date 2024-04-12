@@ -19,95 +19,84 @@ class _MyChartState extends State<MyChart> {
   }
 
   BarChartGroupData makeGroupData(int x, double y) {
-    return BarChartGroupData(
-      x: x,
-      barRods: [
-        BarChartRodData(
+    return BarChartGroupData(x: x, barRods: [
+      BarChartRodData(
           toY: y,
-                      gradient: LinearGradient(
-              colors: [
-                Theme.of(context).colorScheme.primary,
-                Theme.of(context).colorScheme.secondary,
-                Theme.of(context).colorScheme.tertiary,
-                ],
-              transform: const GradientRotation(pi / 40),
-            ),
+          gradient: LinearGradient(
+            colors: [
+              Theme.of(context).colorScheme.primary,
+              Theme.of(context).colorScheme.secondary,
+              Theme.of(context).colorScheme.tertiary,
+            ],
+            transform: const GradientRotation(pi / 40),
+          ),
           width: 20, // width of the bars in the chart
           backDrawRodData: BackgroundBarChartRodData(
-            show: true,
-            toY: 5,
-            color: Colors.grey[300]
-          )
-          )
-      ]
-    );
+              show: true, toY: 5, color: Colors.grey[300]))
+    ]);
   }
-  List<BarChartGroupData> showingGroups() => List.generate(8, (i) { //number 8 modifies how many bars we have
-    switch (i) {
-      case 0:
-        return makeGroupData(0, 2);
-      case 1:
-        return makeGroupData(1, 3);
-      case 2:
-        return makeGroupData(2, 2);
-      case 3:
-        return makeGroupData(3, 4.5);
-      case 4:
-        return makeGroupData(4, 3.8);
-      case 5:
-        return makeGroupData(5, 1.5);
-      case 6:
-        return makeGroupData(6, 4);
-      case 7:
-        return makeGroupData(7, 3.8);
-      default:
-        return throw Error();
-    }
-  
-  });
 
-  BarChartData mainBarData(){
+  List<BarChartGroupData> showingGroups() => List.generate(8, (i) {
+        //number 8 modifies how many bars we have
+        switch (i) {
+          case 0:
+            return makeGroupData(0, 2);
+          case 1:
+            return makeGroupData(1, 3);
+          case 2:
+            return makeGroupData(2, 2);
+          case 3:
+            return makeGroupData(3, 4.5);
+          case 4:
+            return makeGroupData(4, 3.8);
+          case 5:
+            return makeGroupData(5, 1.5);
+          case 6:
+            return makeGroupData(6, 4);
+          case 7:
+            return makeGroupData(7, 3.8);
+          default:
+            return throw Error();
+        }
+      });
+
+  BarChartData mainBarData() {
     return BarChartData(
       titlesData: FlTitlesData(
         show: true,
-        rightTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false)
-        ),
+        rightTitles:
+            const AxisTitles(sideTitles: SideTitles(showTitles: false)),
         topTitles: const AxisTitles(
-          sideTitles: SideTitles(showTitles: false) // for the false value, the titles will not be shown, change to true if want to update
-        ),
+            sideTitles: SideTitles(
+                showTitles:
+                    false) // for the false value, the titles will not be shown, change to true if want to update
+            ),
         bottomTitles: AxisTitles(
-          sideTitles: SideTitles(
-            showTitles: true,
-            reservedSize: 38,
-            getTitlesWidget: getTiles,
-            )
-      ),
-      leftTitles: AxisTitles(
+            sideTitles: SideTitles(
+          showTitles: true,
+          reservedSize: 38,
+          getTitlesWidget: getTiles,
+        )),
+        leftTitles: AxisTitles(
           sideTitles: SideTitles(
             showTitles: true,
             reservedSize: 38,
             getTitlesWidget: leftTitles,
-            ),
-          
+          ),
+        ),
       ),
-      ),
-      borderData: FlBorderData( 
-        show:false // turn to true to show the border of graph
-      ),
-      gridData: FlGridData(show: false),
+      borderData:
+          FlBorderData(show: false // turn to true to show the border of graph
+              ),
+      gridData: const FlGridData(show: false),
       barGroups: showingGroups(),
-      );
+    );
   }
 
   Widget getTiles(double value, TitleMeta meta) {
     const style = TextStyle(
-      color: Colors.grey,
-      fontWeight: FontWeight.bold,
-      fontSize: 14
-    );
+        color: Colors.grey, fontWeight: FontWeight.bold, fontSize: 14);
     Widget text;
-
 
     switch (value.toInt()) {
       case 0:
@@ -141,8 +130,8 @@ class _MyChartState extends State<MyChart> {
         text = const Text('10', style: style);
         break;
       default:
-      text = const Text('', style: style);
-      break;
+        text = const Text('', style: style);
+        break;
     }
     return SideTitleWidget(
       axisSide: meta.axisSide,
@@ -150,6 +139,7 @@ class _MyChartState extends State<MyChart> {
       child: text,
     );
   }
+
   Widget leftTitles(double value, TitleMeta meta) {
     const style = TextStyle(
       color: Colors.grey,
@@ -176,5 +166,4 @@ class _MyChartState extends State<MyChart> {
       child: Text(text, style: style),
     );
   }
-
 }

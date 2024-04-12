@@ -1,11 +1,8 @@
 import 'dart:math';
-import 'dart:ui';
 
 import 'package:budget_buddy/data/data.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
-import 'package:flutter/widgets.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({super.key});
@@ -275,7 +272,7 @@ class MainScreen extends StatelessWidget {
                                       //   )
                                     ],
                                   ),
-                                  SizedBox(width: 12),
+                                  const SizedBox(width: 12),
                                   Text(
                                     transactionsData[i]['name'],
                                     style: TextStyle(
