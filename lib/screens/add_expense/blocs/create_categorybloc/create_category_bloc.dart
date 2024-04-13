@@ -11,8 +11,8 @@ class CreateCategoryBloc
 
   CreateCategoryBloc(this.expenseRepository) : super(CreateCategoryInitial()) {
     on<CreateCategory>((event, emit) async {
+      emit(CreateCategoryLoading());
       try {
-        emit(CreateCategoryLoading());
         await expenseRepository.createCategory(event.category);
         emit(CreateCategorySuccess());
       } catch (e) {
