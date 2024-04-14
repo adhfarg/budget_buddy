@@ -1,12 +1,11 @@
 import '../entities/entities.dart';
 
-
 class Category {
   String categoryId;
   String name;
   int totalExpenses;
   String icon;
-  String color;
+  int color;
 
   Category({
     required this.categoryId,
@@ -16,23 +15,19 @@ class Category {
     required this.color,
   });
 
-  static final empty = Category(
-    categoryId: '',
-    name: '',
-    totalExpenses: 0,
-    icon: '',
-    color: ''
-  );
+  static final empty =
+      Category(categoryId: '', name: '', totalExpenses: 0, icon: '', color: 0);
 
-CategoryEntity toEntity() {
-  return CategoryEntity(
-    categoryId: categoryId,
-    name: name,
-    totalExpenses: totalExpenses,
-    icon: icon,
-    color: color,
-  );
-}
+  CategoryEntity toEntity() {
+    return CategoryEntity(
+      categoryId: categoryId,
+      name: name,
+      totalExpenses: totalExpenses,
+      icon: icon,
+      color: color,
+    );
+  }
+
   static Category fromEntity(CategoryEntity entity) {
     return Category(
       categoryId: entity.categoryId,

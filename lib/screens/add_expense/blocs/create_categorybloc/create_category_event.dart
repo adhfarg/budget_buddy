@@ -13,5 +13,5 @@ class CreateCategory extends CreateCategoryEvent {
   const CreateCategory(this.category);
 
   @override
-  List<Object> get props => [category];
+  List<Object> get props => [];
 }
