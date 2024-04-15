@@ -7,4 +7,8 @@ sealed class GetExpensesEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetExpenses extends GetExpensesEvent {}
+class GetExpenses extends GetExpensesEvent {
+  const GetExpenses(FirebaseExpenseRepo firebaseExpenseRepo);
+
+  add(GetExpenses getExpenses) {}
+}
