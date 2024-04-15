@@ -296,7 +296,7 @@ class MainScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 children: [
                                   Text(
-                                    "\$ ${expenses[i].amount}.00",
+                                    "\$${expenses[i].amount}.00",
                                     style: TextStyle(
                                         fontSize: 14,
                                         color: Theme.of(context)
