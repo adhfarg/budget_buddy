@@ -1,5 +1,6 @@
 import 'package:budget_buddy/screens/add_expense/blocs/get_categories_bloc/get_categories_bloc.dart';
 import 'package:budget_buddy/screens/add_expense/views/category_creation.dart';
+import 'package:expense_repository/expense_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -16,12 +17,13 @@ class _AddExpenseState extends State<AddExpense> {
   TextEditingController expenseController = TextEditingController();
   TextEditingController categoryController = TextEditingController();
   TextEditingController dateController = TextEditingController();
-  DateTime selectedDate = DateTime.now();
+  // DateTime selectedDate = DateTime.now();
+  late Expense expense;
 
   @override
   void initState() {
-    dateController.text = DateFormat('MM/dd/yyyy').format(DateTime
-        .now()); // this line of code sets the date to the current date with a format i installed in the pubspec.yaml file
+    dateController.text = DateFormat('MM/dd/yyyy').format(DateTime.now());
+    expense = Expense.empty;
     super.initState();
   }
 
@@ -81,14 +83,21 @@ class _AddExpenseState extends State<AddExpense> {
                       onTap: () {},
                       decoration: InputDecoration(
                         filled: true,
-                        fillColor: Colors.white,
-                        prefixIcon: const Icon(
-                          FontAwesomeIcons
-                              .list, // creates a list icon on the add expense page
-                          size: 16,
-                          color: Colors
-                              .black, // change color of dollar sign on the add expense page
-                        ),
+                        fillColor: expense.category == Category.empty
+                            ? Colors.white
+                            : Color(expense.category.color),
+                        prefixIcon: expense.category == Category.empty
+                            ? const Icon(
+                                FontAwesomeIcons
+                                    .list, // creates a list icon on the add expense page
+                                size: 16,
+                                color: Colors
+                                    .black, // change color of dollar sign on the add expense page
+                              )
+                            : Image.asset(
+                                'assets/${expense.category.icon}.png',
+                                scale: 2, // size of category icon
+                              ),
                         suffixIcon: IconButton(
                             onPressed: () async {
                               var newCategory =
@@ -131,6 +140,13 @@ class _AddExpenseState extends State<AddExpense> {
                               itemBuilder: (context, int i) {
                                 return Card(
                                   child: ListTile(
+                                    onTap: () {
+                                      setState(() {
+                                        expense.category = state.categories[i];
+                                        categoryController.text =
+                                            expense.category.name;
+                                      });
+                                    },
                                     leading: Image.asset(
                                       'assets/${state.categories[i].icon}.png',
                                       scale: 2, // size of category icon
@@ -155,17 +171,19 @@ class _AddExpenseState extends State<AddExpense> {
                       onTap: () async {
                         DateTime? newDate = await showDatePicker(
                             context: context,
-                            initialDate: selectedDate,
+                            initialDate: expense.date,
                             firstDate: DateTime.now(),
                             lastDate: DateTime.now().add(const Duration(
                                 days:
                                     365)) // this line of code allows the user to select a date from the calendar
                             );
+
                         if (newDate != null) {
                           setState(() {
                             dateController.text =
                                 DateFormat('MM/dd/yyyy').format(newDate);
-                            selectedDate = newDate;
+                            // selectedDate = newDate;
+                            expense.date = newDate;
                           });
                         }
                       },
@@ -196,7 +214,12 @@ class _AddExpenseState extends State<AddExpense> {
                       width: double.infinity,
                       height: kToolbarHeight,
                       child: TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            setState(() {
+                              expense.amount =
+                                  int.parse(expenseController.text);
+                            });
+                          },
                           style: TextButton.styleFrom(
                               backgroundColor: Colors.black,
                               shape: RoundedRectangleBorder(
